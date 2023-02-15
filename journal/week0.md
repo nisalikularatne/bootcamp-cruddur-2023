@@ -44,7 +44,7 @@ In order to build the Crudder Architecture we would require the below mentioned 
 * AWS RDS and DynamoDB databases
 * Momento as a third party serverless caching solution
 * In this diagram we have tried to keep cost minimal and make use of the AWS free tier as much as possible.
-![alt text](img/Crudder%20Logical%20Diagram.png)
+![alt text](img/cld.png)
 
 # Week0 - Security in and of the Cloud
 
@@ -78,3 +78,15 @@ In this section I create a SCP which prevents a user to leave the organization.
 * Governance and compliance of AWS Services being used
 * Shared Responsiblity of Thread Detection
 * Incidence Response Plans to include Cloud
+
+# Design and Requirements Phase
+## It is okay to ask dumb questions
+It is important to ask dumb questions, as this will help reveal the risks,contraints aassumptions in the project that could easily be overlooked.
+
+## Conceptual Design
+This is the napkin phase of the project where we can use high level structure to sketch out our diagram. I have attached my conceptual diagram below
+![alt text](img/ccd.png)
+
+## TOGAF standard for architecture
+A framework used by enterprise that gives a methodology for managing and designing enterprise level architectural designs
+
