@@ -44,7 +44,7 @@ In order to build the Crudder Architecture we would require the below mentioned 
 * AWS RDS and DynamoDB databases
 * Momento as a third party serverless caching solution
 * In this diagram we have tried to keep cost minimal and make use of the AWS free tier as much as possible.
-![alt text](Crudder%20Logical%20Diagram.png)
+![alt text](img/Crudder%20Logical%20Diagram.png)
 
 # Week0 - Security in and of the Cloud
 
