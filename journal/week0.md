@@ -1,6 +1,5 @@
 # Things to install and set up for running the Cruddur application
-*** 
-###
+
 In order to proceed with building the Cruddur application for the bootcamp one will have to register with the services mentioned below:
 * Create a github account. Make a repository using ExamProCo/aws-bootcamp-cruddur-2023 template.
 * Create a gitpod account. Install the chrome/firefox extension and set up your prefered IDE to work with.
@@ -11,7 +10,7 @@ In order to proceed with building the Cruddur application for the bootcamp one w
 * Create a Rollbar account for error logging and tracking services
 
 # Week 0 — Billing and Architecture
-***
+
 One of the prime concepts learned in week 0 about AWS billing was the triad of cost, time and scope. And how we need to keep all these 3 factors while architecting a solution according to an organisations business use case.
 
 ## Billing Alerts
@@ -37,7 +36,7 @@ In this section, week0 demonstrates all the services which are free for 12 month
 and trial services are for limited days.
 
 # Week0 - Architectural Diagram
-***
+
 In order to build the Crudder Architecture we would require the below mentioned components:
 * Frontend and Backend Applications hosted within a container in ECS cluster.
 * Route53 for DNS 
@@ -48,7 +47,7 @@ In order to build the Crudder Architecture we would require the below mentioned 
 ![alt text](Crudder%20Logical%20Diagram.png)
 
 # Week0 - Security in and of the Cloud
-***
+
 Cloud Security is important as it helps reduce impact of breaches. Helps protect networks, applications, services in cloud environments against malicious data theft. It also helps reduce human error responsible for data leaks.  
 ## Adding MFA to root account
 Enable either a virtual or hardware MFA for root account as this account is has all the AWS privileges attached to it. In case it is compromised,
