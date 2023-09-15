@@ -6,6 +6,7 @@ import DesktopSidebar     from '../components/DesktopSidebar';
 import ActivityFeed from '../components/ActivityFeed';
 import ActivityForm from '../components/ActivityForm';
 import ReplyForm from '../components/ReplyForm';
+import { provider } from '../index.js';
 
 // [TODO] Authenication
 import Cookies from 'js-cookie'
@@ -20,16 +21,23 @@ export default function HomeFeedPage() {
 
   const loadData = async () => {
     try {
+      const span = provider.getTracer('app').startSpan('loadData', 'fetch');
+      const startTime = Date.now();
       const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/activities/home`
       const res = await fetch(backend_url, {
         method: "GET"
       });
+      const endTime = Date.now();
+        const latencyTime = endTime - startTime;
+
+        span.addEvent('fetchComplete', { latencyTime });
       let resJson = await res.json();
       if (res.status === 200) {
         setActivities(resJson)
       } else {
         console.log(res)
       }
+      span.end();
     } catch (err) {
       console.log(err);
     }
