@@ -1,5 +1,6 @@
 flask
 flask-cors
+jsonify
 opentelemetry-api 
 opentelemetry-sdk 
 opentelemetry-exporter-otlp-proto-http 

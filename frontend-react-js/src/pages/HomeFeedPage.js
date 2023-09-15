@@ -28,9 +28,9 @@ export default function HomeFeedPage() {
         method: "GET"
       });
       const endTime = Date.now();
-        const latency = endTime - startTime;
+        const latencyTime = endTime - startTime;
 
-        span.addEvent('fetchComplete', { latency });
+        span.addEvent('fetchComplete', { latencyTime });
       let resJson = await res.json();
       if (res.status === 200) {
         setActivities(resJson)

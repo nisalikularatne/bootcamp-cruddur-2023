@@ -36,7 +36,8 @@ FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()
 frontend = os.getenv('FRONTEND_URL')
 backend = os.getenv('BACKEND_URL')
-print('show env variables',frontend,backend)
+environment_variables = dict(os.environ)
+print('show env variables',environment_variables)
 origins = [frontend, backend]
 cors = CORS(
   app, 

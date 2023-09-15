@@ -14,12 +14,11 @@ import { getWebAutoInstrumentations } from '@opentelemetry/auto-instrumentations
 
 // The exporter is responsible for sending traces from the browser to your collector
 const exporter = new OTLPTraceExporter({
-  url: "https://api.honeycomb.io",
+  url: "https://api.honeycomb.io/v1/traces",
   headers: {
     "x-honeycomb-team": "Oqrmp5I3ooG0dzuvTiNxfB",
   },
 });
-console.log('env front end',process.env)
 // The TracerProvider is the core library for creating traces
 const provider = new WebTracerProvider({
   resource: new Resource({
@@ -40,6 +39,7 @@ registerInstrumentations({
     getWebAutoInstrumentations(),
   ],
 });
+export { provider };
 const el_main = document.getElementsByTagName('main')[0];
 const root = ReactDOM.createRoot(el_main);
 root.render(
