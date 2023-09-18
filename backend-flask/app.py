@@ -19,8 +19,9 @@ from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 
 # X-RAY ----------
 xray_url = os.getenv("AWS_XRAY_URL")
-xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
+xray_recorder.configure(service='Cruddur', dynamic_naming=xray_url)
 app = Flask(__name__)
+XRayMiddleware(app, xray_recorder)
 frontend = os.getenv('FRONTEND_URL')
 backend = os.getenv('BACKEND_URL')
 origins = [frontend, backend]
@@ -119,6 +120,5 @@ def data_activities_reply(activity_uuid):
   else:
     return model['data'], 200
   return
-XRayMiddleware(app, xray_recorder)
 if __name__ == "__main__":
   app.run(debug=True)
