@@ -11,6 +11,11 @@ services:
       - "4567:4567"
     volumes:
       - ./backend-flask:/backend-flask
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3  
   frontend-react-js:
     environment:
       REACT_APP_BACKEND_URL: "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
@@ -19,6 +24,11 @@ services:
       - "3000:3000"
     volumes:
       - ./frontend-react-js:/frontend-react-js'
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3  
   xray-daemon:
     image: "amazon/aws-xray-daemon"
     environment:
@@ -26,9 +36,19 @@ services:
       AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
       AWS_REGION: "us-east-1"
     command:
-      - "xray -o -b xray-daemon:2000"
+      - sh
+      - -c
+      - |
+        apt-get update && apt-get install -y curl
+        xray -o -b xray-daemon:2000
     ports:
-      - 2000:2000/udp     
+      - 2000:2000/udp   
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:2000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    
 
 # the name flag is a hack to change the default prepend folder
 # name when outputting the image names

@@ -1,5 +1,7 @@
 FROM python:3.10-slim-buster
 
+# Install curl
+RUN apt-get update && apt-get install -y curl
 # Inside Container
 # make a new folder inside container
 WORKDIR /backend-flask
