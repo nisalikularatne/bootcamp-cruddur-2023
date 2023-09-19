@@ -1,4 +1,3 @@
-version: "3.8"
 services:
   backend-flask:
     environment:
@@ -15,7 +14,10 @@ services:
       test: ["CMD", "curl", "-f", "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}/health"]
       interval: 30s
       timeout: 10s
-      retries: 3  
+      retries: 3
+    labels:
+      - "com.github.autodheal=true"
+
   frontend-react-js:
     environment:
       REACT_APP_BACKEND_URL: "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
@@ -23,12 +25,15 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend-react-js:/frontend-react-js'
+      - ./frontend-react-js:/frontend-react-js
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:3000/health || exit 1"]
       interval: 30s
       timeout: 10s
-      retries: 3  
+      retries: 3
+    labels:
+      - "com.github.autodheal=true"
+
   xray-daemon:
     image: "amazon/aws-xray-daemon"
     environment:
@@ -48,11 +53,5 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-    
-
-# the name flag is a hack to change the default prepend folder
-# name when outputting the image names
-networks: 
-  internal-network:
-    driver: bridge
-    name: cruddur
+    labels:
+      - "com.github.autodheal=true"
