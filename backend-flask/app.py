@@ -13,7 +13,15 @@ from services.messages import *
 from services.create_message import *
 from services.show_activity import *
 
+# X-RAY ----------
+from aws_xray_sdk.core import xray_recorder
+from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
+
+# X-RAY ----------
+xray_url = os.getenv("AWS_XRAY_URL")
+xray_recorder.configure(service='Cruddur', dynamic_naming=xray_url)
 app = Flask(__name__)
+XRayMiddleware(app, xray_recorder)
 frontend = os.getenv('FRONTEND_URL')
 backend = os.getenv('BACKEND_URL')
 origins = [frontend, backend]
@@ -25,6 +33,11 @@ cors = CORS(
   methods="OPTIONS,GET,HEAD,POST"
 )
 
+@app.route('/health')
+def health_check():
+    # Implement health check logic here
+    # Return a successful response when the service is healthy
+    return 'OK', 200
 @app.route("/api/message_groups", methods=['GET'])
 def data_message_groups():
   user_handle  = 'andrewbrown'
@@ -61,11 +74,13 @@ def data_create_message():
   return
 
 @app.route("/api/activities/home", methods=['GET'])
+@xray_recorder.capture('activities_home')
 def data_home():
   data = HomeActivities.run()
   return data, 200
 
 @app.route("/api/activities/@<string:handle>", methods=['GET'])
+@xray_recorder.capture('activities_users')
 def data_handle(handle):
   model = UserActivities.run(handle)
   if model['errors'] is not None:
@@ -97,8 +112,9 @@ def data_activities():
   return
 
 @app.route("/api/activities/<string:activity_uuid>", methods=['GET'])
+@xray_recorder.capture('activities_show')
 def data_show_activity(activity_uuid):
-  data = ShowActivity.run(activity_uuid=activity_uuid)
+  data = ShowActivities.run(activity_uuid=activity_uuid)
   return data, 200
 
 @app.route("/api/activities/<string:activity_uuid>/reply", methods=['POST','OPTIONS'])
@@ -112,6 +128,5 @@ def data_activities_reply(activity_uuid):
   else:
     return model['data'], 200
   return
-
 if __name__ == "__main__":
   app.run(debug=True)
